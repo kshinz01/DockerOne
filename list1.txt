@@ -18,6 +18,9 @@ Atom Install
 Kite Install
   download from site
 
+--------------------------------------------------------------------------------
+Guake Install
+  Linux Software Manager
 
 --------------------------------------------------------------------------------
 Python Install
@@ -36,6 +39,7 @@ Python Install
   sudo update-alternatives --install /usr/bin/python python3 /usr/bin/python3.9 6
   sudo update-alternatives --list python
   sudo update-alternatives --config python
+
 
 
 --------------------------------------------------------------------------------
@@ -74,7 +78,7 @@ Docker Install
 
   docker build -t getting-started .
   docker run -dp 3000:3000 getting-started
-
+  docker logs -f e620ebf5f10f
   docker login -u kshinzato
   docker tag getting-started kshinzato/getting-started
   docker push kshinzato/getting-started
@@ -88,10 +92,120 @@ Docker Install
 
   https://labs.play-with-docker.com/
 
+
+docker volume create todo-db
+docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started
+docker volume inspect todo-db
+
+For Node-based applications, nodemon is a great tool to watch for file changes and then restart the application.
+docker run -dp 3000:3000 \
+    -w /app -v "$(pwd):/app" \
+    node:12-alpine \
+    sh -c "yarn install && yarn run dev"
+
+--------------------------------------------------------------------------------
+Docker Tutorial
+  docker run -d ubuntu bash -c "shuf -i 1-10000 -n 1 -o /data.txt && tail -f /dev/null"
+  docker exec -it <container_id> bash
+  cat /data.txt
+  docker exec <container-id> cat /data.txt
+
+  docker network create todo-app
+  docker run -d \
+    --network todo-app --network-alias mysql \
+    -v todo-mysql-data:/var/lib/mysql \
+    -e MYSQL_ROOT_PASSWORD=secret \
+    -e MYSQL_DATABASE=todos \
+    mysql:5.7
+
+  docker exec -it <mysql-container-id> mysql -p
+  password = secret
+  mysql> SHOW DATABASES;
+
+  docker run -it --network todo-app nicolaka/netshoot
+  dig mysql
+  Answer = 172.18.0.2
+
+  docker run -dp 3000:3000 \
+  -w /app -v "$(pwd):/app" \
+  --network todo-app \
+  -e MYSQL_HOST=mysql \
+  -e MYSQL_USER=root \
+  -e MYSQL_PASSWORD=secret \
+  -e MYSQL_DB=todos \
+  node:12-alpine \
+  sh -c "yarn install && yarn run dev"
+  docker exec -it <mysql-container-id> mysql -p todos
+  docker rm $(docker ps -a -f status=exited -q)
+
+--------------------------------------------------------------------------------
+Docker Compose Install
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+  docker-compose version
+  create docker-compose.yml
+
+
+  docker-compose up -d
+  docker-compose logs -f
+  docker-compose down
+
+  version: "3.7"
+  services:
+    app:
+      image: node:12-alpine
+      command: sh -c "yarn install && yarn run dev"
+      ports:
+        - 3000:3000
+      working_dir: /app
+      volumes:
+        - ./:/app
+      environment:
+        MYSQL_HOST: mysql
+        MYSQL_USER: root
+        MYSQL_PASSWORD: secret
+        MYSQL_DB: todos
+
+    mysql:
+      image: mysql:5.7
+      volumes:
+        - todo-mysql-data:/var/lib/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: secret
+        MYSQL_DATABASE: todos
+
+  volumes:
+    todo-mysql-data:
+
+
+
+
 --------------------------------------------------------------------------------
 Install NodeJS
 sudo apt install nodejs
 sudo apt install npm
+cd /home/user/Projects/DockerOne/app/
+package.json
+sudo npm install
+node src/index.js
+
+
+
+const http = require('http')
+
+const hostname = '127.0.0.1'
+const port = process.env.PORT
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200
+  res.setHeader('Content-Type', 'text/plain')
+  res.end('Hello World!\n')
+})
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`)
+})
+
 
 --------------------------------------------------------------------------------
 NginX & WSGI Web Server Install
