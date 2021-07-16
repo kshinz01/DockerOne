@@ -1,0 +1,122 @@
+Linux Mint Dev Setup
+
+
+--------------------------------------------------------------------------------
+Chrome Install
+  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  sudo apt install ./google-chrome-stable_current_amd64.deb
+  sudo apt install google-chrome-stable
+
+
+--------------------------------------------------------------------------------
+Atom Install
+  wget -qO - https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add -
+  sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" > /etc/apt/sources.list.d/atom.list'
+  sudo apt-get update
+  sudo apt-get install atom
+
+Kite Install
+  download from site
+
+
+--------------------------------------------------------------------------------
+Python Install
+  sudo apt-get install software-properties-common
+  sudo add-apt-repository ppa:deadsnakes/ppa
+  sudo apt-get update
+  sudo apt-get install python3.6
+  sudo apt-get install python3.7
+  sudo apt-get install python3.8
+  sudo apt-get install python3.9
+  sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+  sudo update-alternatives --install /usr/bin/python python3 /usr/bin/python3.5 2
+  sudo update-alternatives --install /usr/bin/python python3 /usr/bin/python3.6 3
+  sudo update-alternatives --install /usr/bin/python python3 /usr/bin/python3.7 4
+  sudo update-alternatives --install /usr/bin/python python3 /usr/bin/python3.8 5
+  sudo update-alternatives --install /usr/bin/python python3 /usr/bin/python3.9 6
+  sudo update-alternatives --list python
+  sudo update-alternatives --config python
+
+
+--------------------------------------------------------------------------------
+GIT Install
+  git clone https://github.com/kshinz01/CSSOne.git
+  git init
+  git status
+  git add .
+  git commit -m "S"
+  git push
+  git fetch
+  git pull
+  git rm --cached -r app/__pycache__/
+  git rm --cached -r project/__pycache__/
+  git rm --cached -r app/migrations/__pycache__/
+
+
+--------------------------------------------------------------------------------
+Docker Install
+  sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(. /etc/os-release; echo "$UBUNTU_CODENAME") stable"
+  sudo apt-get update
+  sudo apt-get -y install docker-ce
+  sudo usermod -aG docker $USER
+  newgrp docker
+  docker --version
+
+  docker pull nginx
+  docker images
+  docker run --name docker-nginx -p 80:80 nginx
+  docker ps -a
+  docker start <container-ID>
+  docker stop <container-ID>
+  docker rm <container-ID>
+
+  docker build -t getting-started .
+  docker run -dp 3000:3000 getting-started
+
+  docker login -u kshinzato
+  docker tag getting-started kshinzato/getting-started
+  docker push kshinzato/getting-started
+
+
+  CONTAINER ID   IMAGE                    COMMAND                  CREATED             STATUS                         PORTS                                       NAMES
+  68dc7578b904   getting-started          "docker-entrypoint.s…"   25 minutes ago      Up 22 minutes                  0.0.0.0:3000->3000/tcp, :::3000->3000/tcp   vigilant_elbakyan
+  fecd30f5441b   docker/getting-started   "/docker-entrypoint.…"   41 minutes ago      Up 41 minutes                  0.0.0.0:80->80/tcp, :::80->80/tcp           friendly_northcutt
+  160feb52883c   ubuntu                   "bash"                   44 minutes ago      Exited (0) 44 minutes ago                                                  ubuntu
+  8c2b10c6570e   nginx                    "/docker-entrypoint.…"   About an hour ago   Exited (0) About an hour ago                                               dazzling_mirzakhani
+
+  https://labs.play-with-docker.com/
+
+--------------------------------------------------------------------------------
+Install NodeJS
+sudo apt install nodejs
+sudo apt install npm
+
+--------------------------------------------------------------------------------
+NginX & WSGI Web Server Install
+
+
+--------------------------------------------------------------------------------
+VENV install
+  sudo  apt-get install python3.9-dev python3.9-venv
+  python3.9 -m venv venv
+  source venv/bin/activate
+
+
+PIP install - Django, Bcrypt
+  python3.9 -m pip install --upgrade pip
+  pip install django
+  pip install bcrypt
+
+
+--------------------------------------------------------------------------------
+Django setup
+  python manage.py makemigrations
+  python manage.py migrate
+  python manage.py test
+  python manage.py runserver
+
+
+--------------------------------------------------------------------------------
+Azur DevOps Setup
