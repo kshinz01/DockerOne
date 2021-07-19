@@ -33,72 +33,239 @@ Python - Tech Stack
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-OUT OF SCOPE
---------------------------------------------------------------------------------
-Java Tech Stack
-  - Maven, Spring Boot
-  - JUnit, Mockito, JMeter, RequestAPI
-  - Apache, MySQL
-  - Android Developer
-  - Appium
+Linux Mint Dev Setup
 
 
 --------------------------------------------------------------------------------
-NodeJS Tech Stack
-  - Angular, React, Vue
-  - NodeJS
-  - Cypress
-  - MongoDB
+Chrome Install
+  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  sudo apt install ./google-chrome-stable_current_amd64.deb
+  sudo apt install google-chrome-stable
 
 
 --------------------------------------------------------------------------------
-C#.NET Tech Stack
-  - ASP.NET
-  - Visual Studio 2019
+Atom Install
+  wget -qO - https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add -
+  sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" > /etc/apt/sources.list.d/atom.list'
+  sudo apt-get update
+  sudo apt-get install atom
+
+Kite Install
+  download from site
+
+--------------------------------------------------------------------------------
+Guake Install
+  Linux Software Manager
+
+--------------------------------------------------------------------------------
+Python Install
+  sudo apt-get install software-properties-common
+  sudo add-apt-repository ppa:deadsnakes/ppa
+  sudo apt-get update
+  sudo apt-get install python3.6
+  sudo apt-get install python3.7
+  sudo apt-get install python3.8
+  sudo apt-get install python3.9
+  sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+  sudo update-alternatives --install /usr/bin/python python3 /usr/bin/python3.5 2
+  sudo update-alternatives --install /usr/bin/python python3 /usr/bin/python3.6 3
+  sudo update-alternatives --install /usr/bin/python python3 /usr/bin/python3.7 4
+  sudo update-alternatives --install /usr/bin/python python3 /usr/bin/python3.8 5
+  sudo update-alternatives --install /usr/bin/python python3 /usr/bin/python3.9 6
+  sudo update-alternatives --list python
+  sudo update-alternatives --config python
+
 
 
 --------------------------------------------------------------------------------
-XCode Tech Stack
-  - Mac
-  - iOS
+GIT Install
+  git clone https://github.com/kshinz01/CSSOne.git
+  git init
+  git status
+  git add .
+  git commit -m "S"
+  git push
+  git fetch
+  git pull
+  git rm --cached -r app/__pycache__/
+  git rm --cached -r project/__pycache__/
+  git rm --cached -r app/migrations/__pycache__/
 
 
 --------------------------------------------------------------------------------
-Dump
-  xILlcoFD3R4v
+Docker Install
+  sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(. /etc/os-release; echo "$UBUNTU_CODENAME") stable"
+  sudo apt-get update
+  sudo apt-get -y install docker-ce
+  sudo usermod -aG docker $USER
+  newgrp docker
+  docker --version
+
+  docker pull nginx
+  docker images
+  docker run --name docker-nginx -p 80:80 nginx
+  docker ps -a
+  docker start <container-ID>
+  docker stop <container-ID>
+  docker rm <container-ID>
+
+  docker build -t getting-started .
+  docker run -dp 3000:3000 getting-started
+  docker logs -f e620ebf5f10f
+  docker login -u kshinzato
+  docker tag getting-started kshinzato/getting-started
+  docker push kshinzato/getting-started
+
+
+  CONTAINER ID   IMAGE                    COMMAND                  CREATED             STATUS                         PORTS                                       NAMES
+  68dc7578b904   getting-started          "docker-entrypoint.s…"   25 minutes ago      Up 22 minutes                  0.0.0.0:3000->3000/tcp, :::3000->3000/tcp   vigilant_elbakyan
+  fecd30f5441b   docker/getting-started   "/docker-entrypoint.…"   41 minutes ago      Up 41 minutes                  0.0.0.0:80->80/tcp, :::80->80/tcp           friendly_northcutt
+  160feb52883c   ubuntu                   "bash"                   44 minutes ago      Exited (0) 44 minutes ago                                                  ubuntu
+  8c2b10c6570e   nginx                    "/docker-entrypoint.…"   About an hour ago   Exited (0) About an hour ago                                               dazzling_mirzakhani
+
+  https://labs.play-with-docker.com/
+
+
+docker volume create todo-db
+docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started
+docker volume inspect todo-db
+
+For Node-based applications, nodemon is a great tool to watch for file changes and then restart the application.
+docker run -dp 3000:3000 \
+    -w /app -v "$(pwd):/app" \
+    node:12-alpine \
+    sh -c "yarn install && yarn run dev"
+
+--------------------------------------------------------------------------------
+Docker Tutorial
+  docker run -d ubuntu bash -c "shuf -i 1-10000 -n 1 -o /data.txt && tail -f /dev/null"
+  docker exec -it <container_id> bash
+  cat /data.txt
+  docker exec <container-id> cat /data.txt
+
+  docker network create todo-app
+  docker run -d \
+    --network todo-app --network-alias mysql \
+    -v todo-mysql-data:/var/lib/mysql \
+    -e MYSQL_ROOT_PASSWORD=secret \
+    -e MYSQL_DATABASE=todos \
+    mysql:5.7
+
+  docker exec -it <mysql-container-id> mysql -p
+  password = secret
+  mysql> SHOW DATABASES;
+
+  docker run -it --network todo-app nicolaka/netshoot
+  dig mysql
+  Answer = 172.18.0.2
+
+  docker run -dp 3000:3000 \
+  -w /app -v "$(pwd):/app" \
+  --network todo-app \
+  -e MYSQL_HOST=mysql \
+  -e MYSQL_USER=root \
+  -e MYSQL_PASSWORD=secret \
+  -e MYSQL_DB=todos \
+  node:12-alpine \
+  sh -c "yarn install && yarn run dev"
+  docker exec -it <mysql-container-id> mysql -p todos
+  docker rm $(docker ps -a -f status=exited -q)
+
+--------------------------------------------------------------------------------
+Docker Compose Install
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+  docker-compose version
+  create docker-compose.yml
+
+
+  docker-compose up -d
+  docker-compose logs -f
+  docker-compose down
+
+  version: "3.7"
+  services:
+    app:
+      image: node:12-alpine
+      command: sh -c "yarn install && yarn run dev"
+      ports:
+        - 3000:3000
+      working_dir: /app
+      volumes:
+        - ./:/app
+      environment:
+        MYSQL_HOST: mysql
+        MYSQL_USER: root
+        MYSQL_PASSWORD: secret
+        MYSQL_DB: todos
+
+    mysql:
+      image: mysql:5.7
+      volumes:
+        - todo-mysql-data:/var/lib/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: secret
+        MYSQL_DATABASE: todos
+
+  volumes:
+    todo-mysql-data:
+
+
+
+
+--------------------------------------------------------------------------------
+Install NodeJS
+sudo apt install nodejs
+sudo apt install npm
+cd /home/user/Projects/DockerOne/app/
+package.json
+sudo npm install
+node src/index.js
+
+
+
+const http = require('http')
+
+const hostname = '127.0.0.1'
+const port = process.env.PORT
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200
+  res.setHeader('Content-Type', 'text/plain')
+  res.end('Hello World!\n')
+})
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`)
+})
+
+
+--------------------------------------------------------------------------------
+NginX & WSGI Web Server Install
+
+
+--------------------------------------------------------------------------------
+VENV install
+  sudo  apt-get install python3.9-dev python3.9-venv
+  python3.9 -m venv venv
+  source venv/bin/activate
+
+
+PIP install - Django, Bcrypt
+  python3.9 -m pip install --upgrade pip
+  pip install django
+  pip install bcrypt
+
+
+--------------------------------------------------------------------------------
+Django setup
+  python manage.py makemigrations
+  python manage.py migrate
+  python manage.py test
+  python manage.py runserver
+
+
+--------------------------------------------------------------------------------
+Azur DevOps Setup
