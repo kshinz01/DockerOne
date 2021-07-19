@@ -1,15 +1,33 @@
 system1
 
+
 --------------------------------------------------------------------------------
 Hardware
-  - Linux Mint OS
-  - Atom
-  - Chrome
-  - Guake Terminal
-  - Git
-  - Docker
-  - Azure DevOps
-  - Azure Cloud
+  - CPU - Intel G3258
+  - MB  - MSI H81 E33
+  - RAM - 16GB
+  - HD  - 100GB
+  - GPU - MSI GT710 2GB
+  - Wif - TP-Link N300 PCIe WiFi Card
+  - CAS - Fractal Design
+  - PSU - evGA
+  - FAN - N/A
+
+Peripherals
+  - Keyboard - Logitech MX
+  - Mouse    - Logitech MX
+  - Monitors - Samsung
+  - Speakers - Bose
+
+OS
+  - Linux Mint 20 "Uma"
+
+
+--------------------------------------------------------------------------------
+Software
+  - Atom - Kite, Minimap
+  - Chrome - DevTools, ChroPath, LastPass
+  - Guake - Terminal
 
 
 --------------------------------------------------------------------------------
@@ -17,13 +35,41 @@ Python - Tech Stack
   - Django(lg), Flask(sm)
   - Pytest, Requests, Selenium
   - PostgreSQL(lg), SQLite3(sm)
-  - gunicorn(wsgi), NginX(web)
+  - NginX(web), gunicorn(wsgi)
 
 
 --------------------------------------------------------------------------------
+Cloud - SaaS/PaaS
+  - Github - Code Repo
+  - Dockerhub - Container Repo
+  - Azure DevOps - Planning, Pipelines
+  - Azure Cloud - App Service
 
 
+--------------------------------------------------------------------------------
+System Architecture
+  - Local - Start with a Django/Pytest/PostgreSQL/Gunicorn/NginX Boilerplate
+  - Local - Setup Github
+  - Local - Setup Dockerhub
 
+------- Crossing the threshold ---------
+
+  - DEV  - Spin up the DEV App container
+  - DEV  - Spin up the DEV DB container
+  - DEV  - Spin up the DEV Util container
+
+  - TEST - TEST App container
+  - TEST - TEST DB container
+  - TEST - TEST Util container
+
+  - PROD - Setup SSL certificates
+  - PROD - Setup Domain Registration
+  - PROD - Setup SEO/Analytics
+  - PROD - NginX server/load balancer
+  - PROD - PROD1 App container
+  - PROD - PROD2 App container
+  - PROD - PROD3 App container
+  - PROD - PROD DB container
 
 
 
